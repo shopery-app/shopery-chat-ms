@@ -1,0 +1,50 @@
+buildscript {
+	apply from: 'versions.gradle'
+}
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.1.2'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'az.shopery'
+version = '1.0.0'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(27)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+
+	compileOnly "org.projectlombok:lombok:${v.lombok}"
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	runtimeOnly 'org.postgresql:postgresql'
+
+	annotationProcessor "org.projectlombok:lombok:${v.lombok}"
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+
+	testCompileOnly "org.projectlombok:lombok:${v.lombok}"
+
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	testAnnotationProcessor "org.projectlombok:lombok:${v.lombok}"
+}
+
+tasks.named('test') {
+	enabled = false
+}
