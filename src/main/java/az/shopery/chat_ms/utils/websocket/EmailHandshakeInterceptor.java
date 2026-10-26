@@ -16,6 +16,8 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 @Component
 public class EmailHandshakeInterceptor implements HandshakeInterceptor {
 
+    private static final String USER_EMAIL_HEADER = "X-User-Email";
+
     @Override
     public boolean beforeHandshake(
             @NonNull ServerHttpRequest request,
@@ -29,7 +31,7 @@ public class EmailHandshakeInterceptor implements HandshakeInterceptor {
             return false;
         }
 
-        String email = servletRequest.getServletRequest().getParameter("email");
+        String email = servletRequest.getServletRequest().getHeader(USER_EMAIL_HEADER);
         if (Objects.isNull(email) || email.isBlank()) {
             log.warn("WS rejected: missing email");
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
